@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script&family=Poppins&family=Roboto&family=Roboto+Slab&family=Tilt+Prism&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main d-flex justify-content-center align-items-center flex-wrap">
+        <div class="sub1 ">
+            <div class="qqq"><input id="cityInput" type="text" placeholder="enter the city name"> <button onclick="searchCountry()">Search</button></div>
+        <div id="result" >
+
+
+        </div>
+    </div>
+        <div class="sub2">
+            <p></p>
+            
+            <hr>
+            <div id="result2" class="mt-5 pt-5">
+
+
+            </div>
+        </div>
+
+    </div>
+    
+</body>
+<script>
+    const searchCountry=async ()=>{
+        let city=cityInput.value
+        if(city){
+            // api call : https://api.openweathermap.org/data/2.5/weather?q=kannur&appid=8ac5c4d57ba6a4b3dfcf622700447b1e&units=metric
+            const response=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=8ac5c4d57ba6a4b3dfcf622700447b1e&units=metric`)
+            console.log(response);
+           
+           
+            if(response.status==200){
+                 const cityDetails=await response.json()
+            console.log(cityDetails);
+            const date = new Date();
+            console.log(date);
+            var image=""
+            if(cityDetails.weather[0].icon=="01d"){
+                image+="./images/01d@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="01n"){
+                image+="./images/01n@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="02d"){
+                image+="./images/02d@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="02n"){
+                image+="./images/02n@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="03d"){
+                image+="./images/03d@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="03n"){
+                image+="./images/03n@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="04d"){
+                image+="./images/04d@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="04n"){
+                image+="./images/04n@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="09d"){
+                image+="./images/09d@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="09n"){
+                image+="./images/09nf@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="10d"){
+                image+="./images/10d@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="10n"){
+                image+="./images/10n@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="11d"){
+                image+="./images/11d@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="11n"){
+                image+="./images/11n@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="13d"){
+                image+="./images/13d@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="13n"){
+                image+="./images/13n@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="50d"){
+                image+="./images/50d@2x.png"
+            }
+            else if(cityDetails.weather[0].icon=="50n"){
+                image+="./images/50n@2x.png"
+            }
+            console.log(image);
+                console.log(cityDetails.weather[0].icon);
+            result.innerHTML=`
+           <div class="tmp">
+                <img width="130px" height="130px" src=${image}>
+                <h1>${cityDetails.main.temp} &#8451</h1>
+           </div>
+            
+           <div class="mar">
+               <div class="fl">
+                    <div class="feel"><h5 >Feels like : ${cityDetails.main.feels_like} &#8451 </h5></div>
+                    <div class="feel"><h5>Humidity: ${cityDetails.main.humidity} % </h5></div>
+               </div>
+               <div class="fl">
+                    <div class="feel"><h5 >Min temp : ${cityDetails.main.temp_min} &#8451 </h5></div>
+                    <div class="feel"><h5>Max temp: ${cityDetails.main.temp_max} % </h5></div>
+               </div>
+           </div>
+            <div class="dat"><h6>${date}</h6></div>
+
+            
+            `
+            result2.innerHTML=`
+            <h1>Weather Details</h1>
+            <h4 class="aaa">Country</h4>
+            <h5>${cityDetails.sys.country}</h5>
+
+            <h4 class="aaa">Humidity</h4>
+            <h5> ${cityDetails.name}</h5>
+
+            <h4 class="aaa">Wind</h4>
+            <h5>${cityDetails.wind.speed} kmph</h5>
+
+            <h4 class="aaa">Pressure</h4>
+            <h5>${cityDetails.main.pressure}</h5>
+        
+            
+            `
+
+
+       }
+       else{
+        alert("No city found !!!")
+       }
+    }
+        else{
+alert("Please fill the form !!!")
+
+        }
+
+
+
+    }
+</script>
+</html>
